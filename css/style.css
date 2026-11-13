@@ -1,0 +1,166 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f7fb;
+  color: #222;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100vh;
+}
+
+/* ---------- Historique ---------- */
+.historique {
+  background: #1F3864;
+  color: #fff;
+  padding: 20px;
+}
+.historique h2 { margin-top: 0; font-size: 1.1rem; }
+.historique nav { display: flex; flex-direction: column; gap: 8px; }
+.historique a {
+  color: #cfe0f5;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: color 0.2s, background-color 0.2s; /* 3. changement en douceur */
+}
+.historique a:hover {
+  color: #fff;
+  background-color: #2E75B6;
+}
+
+/* ---------- Zone de chat ---------- */
+.chat {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.entete {
+  background: #fff;
+  padding: 14px 20px;
+  border-bottom: 1px solid #dde4ee;
+}
+.entete h1 { margin: 0; font-size: 1.2rem; }
+
+/* 5. Point vert pulsant devant « En ligne » */
+@keyframes pulsation {
+  0%   { transform: scale(1);   opacity: 1; }
+  50%  { transform: scale(1.4); opacity: 0.5; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.statut {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: #2e7d32;
+}
+.statut::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #2ecc71;
+  animation: pulsation 1.5s ease-in-out infinite;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 1. Apparition des bulles : fondu + montée de 10px en 0,3 s */
+@keyframes apparition {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.message {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  animation: apparition 0.3s ease-out;
+}
+.message.bot  { background: #fff; align-self: flex-start; border: 1px solid #dde4ee; }
+.message.user { background: #2E75B6; color: #fff; align-self: flex-end; }
+
+/* 2. Indicateur « en train d'écrire » (bulle du bot + 3 points) */
+@keyframes rebond {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-6px); }
+}
+.message.ecrit {
+  display: flex;
+  gap: 5px;
+  padding: 14px;
+}
+.message.ecrit span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8aa4c4;
+  animation: rebond 1.2s ease-in-out infinite;
+}
+.message.ecrit span:nth-child(2) { animation-delay: 0.2s; }
+.message.ecrit span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ---------- Saisie ---------- */
+.saisie {
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px;
+  background: #fff;
+  border-top: 1px solid #dde4ee;
+}
+
+/* 4. Focus : bordure bleue + ombre bleue légère, avec transition */
+.saisie input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid #c8d3e2;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.saisie input:focus {
+  border-color: #2E75B6;
+  box-shadow: 0 0 0 3px rgba(46, 117, 182, 0.25);
+}
+
+/* 3. Bouton Envoyer : couleur douce + réduction au clic */
+.envoyer {
+  padding: 10px 20px;
+  background-color: #2E75B6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+}
+.envoyer:hover  { background-color: #1F3864; }
+.envoyer:active { transform: scale(0.95); }
+
+/* 6. Accessibilité : l'interface reste pleinement utilisable sans animation.
+   Les états (survol, focus, point vert, points de frappe) restent visibles,
+   seul le mouvement est supprimé. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .message { max-width: 90%; }
+}

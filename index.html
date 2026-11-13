@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="script.js" defer></script>
+  <title>Nova — Chatbot (v8)</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="historique">
+      <h2>Historique</h2>
+      <nav>
+        <a href="#">Question sur les tarifs</a>
+        <a href="#">Aide à l'installation</a>
+        <a href="#">Intégration du widget</a>
+      </nav>
+    </aside>
+
+    <main class="chat">
+      <header class="entete">
+        <h1>Nova</h1>
+        <p class="statut">En ligne</p>
+      </header>
+
+      <div class="messages">
+        <div class="message bot">Bonjour ! Je suis Nova. Comment puis-je vous aider ?</div>
+        <div class="message user">Quelles sont vos formules ?</div>
+        <div class="message bot">Nous proposons les formules Starter, Pro et Entreprise.</div>
+        <div class="message bot ecrit"><span></span><span></span><span></span></div>
+      </div>
+
+      <form class="saisie">
+        <input type="text" placeholder="Écrivez votre message…" aria-label="Message">
+        <button type="submit" class="envoyer">Envoyer</button>
+      </form>
+    </main>
+  </div>
+</body>
+</html>
